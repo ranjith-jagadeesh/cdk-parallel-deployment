@@ -1,11 +1,10 @@
 #!/usr/bin/env node
 import "./env";
-import { App, StackProps } from "aws-cdk-lib";
-import { Construct } from "constructs";
+import { StackProps } from "aws-cdk-lib";
 import path from "path";
 import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
 import { AttributeType, Table } from "aws-cdk-lib/aws-dynamodb";
-import { BaseStack } from "./base_stack";
+import { BaseStack, BaseApp } from "./base_stack";
 
 
 class InfraStack extends BaseStack {
@@ -19,7 +18,7 @@ interface ServiceStackProps extends StackProps {
 }
 
 class ServiceStack extends BaseStack {
-  constructor(scope: Construct, id: string, props: ServiceStackProps) {
+  constructor(scope: BaseApp, id: string, props: ServiceStackProps) {
     super(scope, id, props);
 
     const lambda = new NodejsFunction(this, "backend-lambda", {
@@ -30,8 +29,7 @@ class ServiceStack extends BaseStack {
   }
 }
 
-
-const app = new App();
+export const app = new BaseApp();
 
 export const backendStack = new InfraStack(app, "infra");
 export const backendStack1 = new InfraStack(app, "infra1");

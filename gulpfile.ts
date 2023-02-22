@@ -1,7 +1,8 @@
 import { spawn } from "child_process";
 import { parallel } from "gulp";
-import { cdkStacks } from "./cdk/base_stack";
+import { app } from "./cdk/cdk";
 const map = new Map<String, Set<String>>();
+const cdkStacks = app.stacks;
 
 export const topologicalSortAndDeploy = async () => {
   const nonDependantStacks: string[] = [];
@@ -40,7 +41,7 @@ export const deployAndRemoveDependency = async (stacks: string[]) => {
 };
 
 export const deployStacks = async (stacks: string[]) => {
-  console.log("stcals", stacks);
+  console.log("Stacks queued for parallel deployment", stacks);
   try {
     let arrPromises = [];
     for (let stackName of stacks) {
