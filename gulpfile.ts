@@ -1,6 +1,6 @@
 import { spawn } from "child_process";
 import { parallel } from "gulp";
-import { cdkStacks } from "./cdk/cdk";
+import { cdkStacks } from "./cdk/base_stack";
 const map = new Map<String, Set<String>>();
 
 export const topologicalSortAndDeploy = async () => {
@@ -55,9 +55,6 @@ export const deployStacks = async (stacks: string[]) => {
 };
 
 export const CommandExec = (command: string, args: string) => {
-  //   try {
-  //     // if (!env) env = process.env;
-
   return new Promise((resolve, reject) => {
     let allData = "";
 
@@ -82,10 +79,11 @@ export const CommandExec = (command: string, args: string) => {
       if (code == 0) resolve(allData);
       else reject(errOutput);
     });
+
+    call.on("error", (error: any) => {
+      reject(errOutput);
+    });
   });
-  //   } catch (e) {
-  //     return Promise.reject(e);
-  //   }
 };
 
 export default parallel(topologicalSortAndDeploy);
