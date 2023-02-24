@@ -6,7 +6,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build cdk/frontend",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "parallel-deploy":"ts-node cdk/deploy.ts"
   },
   "dependencies": {
     "@types/gulp": "^4.0.10",

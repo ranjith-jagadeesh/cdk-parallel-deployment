@@ -1,10 +1,8 @@
+import { Stack } from "aws-cdk-lib";
 import { spawn } from "child_process";
-import { parallel } from "gulp";
-import { app } from "./cdk/cdk";
 const map = new Map<String, Set<String>>();
-const cdkStacks = app.stacks;
 
-export const topologicalSortAndDeploy = async () => {
+export const topologicalSortAndDeploy = async (cdkStacks: Stack[]) => {
   const nonDependantStacks: string[] = [];
 
   for (const stack of cdkStacks) {
@@ -86,5 +84,3 @@ export const CommandExec = (command: string, args: string) => {
     });
   });
 };
-
-export default parallel(topologicalSortAndDeploy);

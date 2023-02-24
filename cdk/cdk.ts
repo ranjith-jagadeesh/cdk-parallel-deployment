@@ -5,6 +5,7 @@ import path from "path";
 import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
 import { AttributeType, Table } from "aws-cdk-lib/aws-dynamodb";
 import { BaseStack, BaseApp } from "./base_stack";
+import { Construct } from "constructs";
 
 
 class InfraStack extends BaseStack {
@@ -18,7 +19,7 @@ interface ServiceStackProps extends StackProps {
 }
 
 class ServiceStack extends BaseStack {
-  constructor(scope: BaseApp, id: string, props: ServiceStackProps) {
+  constructor(scope: Construct, id: string, props: ServiceStackProps) {
     super(scope, id, props);
 
     const lambda = new NodejsFunction(this, "backend-lambda", {
